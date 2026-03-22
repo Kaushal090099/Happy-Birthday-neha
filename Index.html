@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surprise for Neha! 💖</title>
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    <style>
+        body { margin: 0; background: #fff0f3; font-family: 'Poppins', sans-serif; overflow-x: hidden; text-align: center; }
+        
+        /* Loading Screen */
+        #loader-page { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: white; position: fixed; width: 100%; z-index: 1000; transition: 1s; }
+        .heart-loader { color: #ff4d6d; font-size: 50px; animation: beat 0.8s infinite; }
+        @keyframes beat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.3); } }
+
+        /* Main Content */
+        #main-content { display: none; padding: 50px 20px; }
+        h1 { font-family: 'Dancing Script', cursive; font-size: 4rem; color: #ff4d6d; margin: 20px 0; }
+        
+        /* Floating Balloons */
+        .balloon { position: absolute; bottom: -100px; width: 50px; height: 70px; border-radius: 50%; opacity: 0.7; animation: float 10s infinite linear; }
+        @keyframes float { from { transform: translateY(0); } to { transform: translateY(-120vh); } }
+
+        /* Surprise Box & Letter */
+        .card-container { background: white; max-width: 400px; margin: 30px auto; padding: 30px; border-radius: 20px; box-shadow: 0 15px 35px rgba(255, 77, 109, 0.2); border: 2px solid #ffb3c1; position: relative; }
+        .neha-photo { width: 150px; height: 150px; border-radius: 50%; border: 5px solid #ff4d6d; object-fit: cover; margin-bottom: 150px; display: none; margin: 0 auto 20px; }
+        
+        button { background: #ff4d6d; color: white; border: none; padding: 15px 30px; border-radius: 50px; font-size: 18px; cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4); }
+        button:hover { transform: scale(1.1); background: #ff758f; }
+
+        .hidden-msg { display: none; margin-top: 20px; font-style: italic; color: #c9184a; line-height: 1.6; }
+    </style>
+</head>
+<body>
+
+    <!-- Step 1: Loading Screen -->
+    <div id="loader-page">
+        <div class="heart-loader">❤️</div>
+        <p id="load-text">Searching for the best person on Earth...</p>
+    </div>
+
+    <!-- Step 2: Main Birthday Page -->
+    <div id="main-content">
+        <div id="balloons-container"></div>
+        
+        <h1>Happy Birthday, Neha! 🎂</h1>
+        
+        <div class="card-container">
+            <!-- Agar aapke paas photo ka link hai toh src mein daal dena -->
+            <img src="https://via.placeholder.com" id="profile" class="neha-photo">
+            
+            <p style="font-size: 1.2rem;">Today is all about you! ✨</p>
+            
+            <button onclick="revealSecret()">Open My Letter ✉️</button>
+            
+            <div id="secret-msg" class="hidden-msg">
+                "Dear Neha, <br> 
+                You're not just my best friend, you're the family I chose. 
+                I hope this year brings you as much joy as you bring to everyone around you. 
+                Keep shining, keep smiling! <br> 
+                <b>- Always here for you ❤️</b>"
+            </div>
+        </div>
+    </div>
+
+    <!-- Confetti & Logic Scripts -->
+    <script src="https://cdn.jsdelivr.net"></script>
+    <script>
+        // 1. Loading Logic
+        setTimeout(() => {
+            document.getElementById('load-text').innerText = "Found Her! It's Neha! ✨";
+            setTimeout(() => {
+                document.getElementById('loader-page').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loader-page').style.display = 'none';
+                    document.getElementById('main-content').style.display = 'block';
+                    startBalloons();
+                }, 500);
+            }, 1500);
+        }, 2500);
+
+        // 2. Balloons Animation
+        function startBalloons() {
+            const container = document.getElementById('balloons-container');
+            const colors = ['#ff4d6d', '#ff758f', '#ffb3c1', '#c9184a', '#ffccd5'];
+            for(let i=0; i<20; i++) {
+                let b = document.createElement('div');
+                b.className = 'balloon';
+                b.style.left = Math.random() * 100 + 'vw';
+                b.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                b.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(b);
+            }
+        }
+
+        // 3. Secret Letter Reveal
+        function revealSecret() {
+            document.getElementById('secret-msg').style.display = 'block';
+            document.getElementById('profile').style.display = 'block';
+            
+            // Confetti Explosion
+            var duration = 5 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            function randomInRange(min, max) { return Math.random() * (max - min) + min; }
+
+            var interval = setInterval(function() {
+                var timeLeft = animationEnd - Date.now();
+                if (timeLeft <= 0) return clearInterval(interval);
+                var particleCount = 50 * (timeLeft / duration);
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+            }, 250);
+        }
+    </script>
+</body>
+  </html>
+
